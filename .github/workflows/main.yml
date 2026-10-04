@@ -2,9 +2,9 @@ name: Build Android APK
 
 on:
   push:
-    branches: [main]
+    branches: [ main ]
   pull_request:
-    branches: [main]
+    branches: [ main ]
 
 jobs:
   build:
@@ -39,5 +39,3 @@ jobs:
           name: app-release
           path: build/app/outputs/flutter-apk/app-release.apk
           if-no-files-found: error
-          name: app-release
-          path: build/app/outputs/flutter-apk/app-release.apk build/app/outputs/flutter-apk/app-release.apk
