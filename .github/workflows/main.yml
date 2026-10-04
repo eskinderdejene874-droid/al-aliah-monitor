@@ -2,40 +2,41 @@ name: Build Android APK
 
 on:
   push:
-    branches: [ main ]
+    branches: [ main, master ]
   pull_request:
-    branches: [ main ]
+    branches: [ main, master ]
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
+    defaults:
+      run:
+        working-directory: "al aliha"
+
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v5
+        uses: actions/checkout@v4
 
-      - name: Set up Java JDK
-        uses: actions/setup-java@v5
-        with:
-          distribution: 'zulu'
-          java-version: '17'
-
-      - name: Set up Flutter SDK
+      - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
           flutter-version: '3.19.6'
-          channel: 'stable'
+          channel: stable
           cache: true
 
-      - name: Install dependencies
+      - name: Check Flutter
+        run: flutter --version
+
+      - name: Get Flutter dependencies
         run: flutter pub get
 
-      - name: Build Release APK
-        run: flutter build apk --release
+      - name: Build Android APK
+        run: flutter build apk --debug
 
       - name: Upload APK Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: app-release
-          path: build/app/outputs/flutter-apk/app-release.apk
+          name: app-debug
+          path: "al aliha/build/app/outputs/flutter-apk/app-debug.apk"
           if-no-files-found: error
